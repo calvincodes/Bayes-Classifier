@@ -33,15 +33,23 @@ public class ArffFileReader {
 
                 if (line.startsWith("@attribute")) {
 
-                    String[] header = line.split("'");
-                    attributeLabelsList.add(header[1]);
-                    header[2] = header[2].replace('{', ' ');
-                    header[2] = header[2].replace('}', ' ');
-                    header[2] = header[2].replaceAll("\\s+", "");
-                    allClassLabels = header[2].split(",");
-                    possibleAttributeValuesMap.put(header[1], Arrays.asList(allClassLabels));
-                    if (header[1].equalsIgnoreCase("class")) {
-                        allClassLabels = header[2].split(",");
+                    String[] header = line.split(" ");
+                    String attributeTag = header[1]
+                                            .replace("'", " ")
+                                            .replace("'", " ")
+                                            .replaceAll("\\s+", "");
+                    attributeLabelsList.add(attributeTag);
+                    StringBuilder possibleAttributeValues = new StringBuilder();
+                    for (int i = 2; i < header.length; i++) {
+                        possibleAttributeValues.append(header[i]);
+                    }
+                    String possibleAttributeValuesStr = possibleAttributeValues.toString();
+                    possibleAttributeValuesStr = possibleAttributeValuesStr.replace('{', ' ');
+                    possibleAttributeValuesStr = possibleAttributeValuesStr.replace('}', ' ');
+                    possibleAttributeValuesStr = possibleAttributeValuesStr.replaceAll("\\s+", "");
+                    possibleAttributeValuesMap.put(attributeTag, Arrays.asList(possibleAttributeValuesStr.split(",")));
+                    if (attributeTag.equalsIgnoreCase("class")) {
+                        allClassLabels = possibleAttributeValuesStr.split(",");
                     }
                 } else if (line.startsWith("@") || line.startsWith("%")) {
 
@@ -51,7 +59,9 @@ public class ArffFileReader {
                     List<String> featureValues = Arrays.asList(line.split(","));
                     InstanceEntry instanceEntry = new InstanceEntry();
                     int featureLen = featureValues.size();
-                    instanceEntry.setClassLabel(featureValues.get(featureLen - 1)); // Extract class label.
+                    instanceEntry.setClassLabel(
+                            featureValues.get(featureLen - 1)
+                                    .equalsIgnoreCase(allClassLabels[0]) ? 0 : 1); // Extract class label.
                     // Trim class label and set feature values
                     instanceEntry.setFeatureValues(featureValues.toArray(new String[0]));
                     instanceEntry.setAttributeLabels(attributeLabelsList.toArray(new String[0]));
