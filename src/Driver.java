@@ -1,12 +1,10 @@
-import java.text.DecimalFormat;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 public class Driver {
 
     private static ArffFileReader arffFileReader  = new ArffFileReader();
-    private static DecimalFormat df = new DecimalFormat("0.000000");
+    private static NaiveBayesClassifier naiveBayesClassifier = new NaiveBayesClassifier();
+    private static Printer printer = new Printer();
 
     public static void main(String[] args) {
 
@@ -24,8 +22,28 @@ public class Driver {
 
         // Step 1: Read the ARFF file
 
-        List<InstanceEntry> allTrainingData = arffFileReader.readArff(trainingFile);
-        int allTrainingDataSize = allTrainingData.size();
+        List<InstanceEntry> trainingData = arffFileReader.readArff(trainingFile);
+        List<InstanceEntry> testData = arffFileReader.readArff(testFile);
+
+        /* ****************************************************************** */
+        /* ****************************************************************** */
+
+        if (modelType.equals("n")) {
+
+            naiveBayesClassifier.trainModel(trainingData);
+
+            for (InstanceEntry testEntry : testData) {
+                naiveBayesClassifier.classify(testEntry);
+            }
+
+            printer.printResults(modelType, trainingData);
+
+        } else if (modelType.equals("t")) {
+
+        } else {
+            System.err.println("Model type can be n or t");
+        }
+
 
         long endTime = System.nanoTime();
         System.out.println("Took "+ (double)(endTime - startTime) / 1000000000.0 + " s");

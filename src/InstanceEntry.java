@@ -1,5 +1,6 @@
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 public class InstanceEntry {
@@ -7,9 +8,11 @@ public class InstanceEntry {
     private String[] attributeLabels;
     private HashMap<String, List<String>> possibleAttributeValues;
     private String[] featureValues;
-    private String classLabel;
+    private int classLabel;
+    private String classLabelStr;
     private String[] allClassLabels;
-    private String predictedClassLabel;
+    private int predictedClassLabel;
+    private String predictedClassLabelStr;
     private double predictionConfidence;
 
     public String[] getAttributeLabels() {
@@ -36,12 +39,24 @@ public class InstanceEntry {
         this.featureValues = featureValues;
     }
 
-    public String getClassLabel() {
+    public int getClassLabel() {
         return classLabel;
     }
 
-    public void setClassLabel(String classLabel) {
+    public void setClassLabel(int classLabel) {
         this.classLabel = classLabel;
+    }
+
+    public String getClassLabelStr() {
+        return classLabel == 0
+                    ? allClassLabels[0]
+                        .replace("'", " ")
+                        .replace("'", " ")
+                        .replaceAll("\\s+", "")
+                    : allClassLabels[1]
+                        .replace("'", " ")
+                        .replace("'", " ")
+                        .replaceAll("\\s+", "");
     }
 
     public String[] getAllClassLabels() {
@@ -52,12 +67,24 @@ public class InstanceEntry {
         this.allClassLabels = allClassLabels;
     }
 
-    public String getPredictedClassLabel() {
+    public int getPredictedClassLabel() {
         return predictedClassLabel;
     }
 
-    public void setPredictedClassLabel(String predictedClassLabel) {
+    public void setPredictedClassLabel(int predictedClassLabel) {
         this.predictedClassLabel = predictedClassLabel;
+    }
+
+    public String getPredictedClassLabelStr() {
+        return predictedClassLabel == 0
+                ? allClassLabels[0]
+                    .replace("'", " ")
+                    .replace("'", " ")
+                    .replaceAll("\\s+", "")
+                : allClassLabels[1]
+                    .replace("'", " ")
+                    .replace("'", " ")
+                    .replaceAll("\\s+", "");
     }
 
     public double getPredictionConfidence() {
