@@ -68,7 +68,7 @@ public class NaiveBayesClassifier {
             double totalClass1Freq =
                     frequencyTable.getTotalClass1Freq();
 
-            // Smoothening using +1 strategy
+            // Smoothing using Laplace estimates (pseudocounts of 1)
             probabilityClass0ProportionalTo = probabilityClass0ProportionalTo
                     * (
                             (featureAndClass0Freq + 1) /
@@ -79,7 +79,7 @@ public class NaiveBayesClassifier {
                                     )
                     );
 
-            // Smoothening using +1 strategy
+            // Smoothing using Laplace estimates (pseudocounts of 1)
             probabilityClass1ProportionalTo = probabilityClass1ProportionalTo
                     * (
                             (featureAndClass1Freq + 1) /

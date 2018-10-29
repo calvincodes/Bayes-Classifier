@@ -28,20 +28,24 @@ public class Driver {
         /* ****************************************************************** */
         /* ****************************************************************** */
 
-        if (modelType.equals("n")) {
+        switch (modelType) {
+            case "n":
 
-            naiveBayesClassifier.trainModel(trainingData);
+                naiveBayesClassifier.trainModel(trainingData);
 
-            for (InstanceEntry testEntry : testData) {
-                naiveBayesClassifier.classify(testEntry);
-            }
+                for (InstanceEntry testEntry : testData) {
+                    naiveBayesClassifier.classify(testEntry);
+                }
 
-            printer.printResults(modelType, trainingData);
+                printer.printResults(modelType, trainingData);
 
-        } else if (modelType.equals("t")) {
+                break;
+            case "t":
 
-        } else {
-            System.err.println("Model type can be n or t");
+                break;
+            default:
+                System.err.println("Model type can be n or t");
+                break;
         }
 
 
