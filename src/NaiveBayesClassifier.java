@@ -123,5 +123,47 @@ public class NaiveBayesClassifier {
             instanceEntry.setPredictionConfidence(p1);
         }
     }
+
+    public double[] getProbabilitiesOfClassesProportionalTo(
+            InstanceEntry instanceEntry, String featureValue, int featureIndex) {
+
+        double probabilityClass0ProportionalTo = 1d;
+        double probabilityClass1ProportionalTo = 1d;
+
+        FrequencyTable frequencyTable = trainingFrequencies.get(featureIndex);
+
+        int featureAndClass0Freq =
+                frequencyTable.getFeatureValue2Class0Freq().getOrDefault(featureValue, 0);
+        double totalClass0Freq =
+                frequencyTable.getTotalClass0Freq();
+        int featureAndClass1Freq =
+                frequencyTable.getFeatureValue2Class1Freq().getOrDefault(featureValue, 0);
+        double totalClass1Freq =
+                frequencyTable.getTotalClass1Freq();
+
+        // Smoothing using Laplace estimates (pseudocounts of 1)
+        probabilityClass0ProportionalTo = probabilityClass0ProportionalTo
+                * (
+                (featureAndClass0Freq + 1) /
+                        (totalClass0Freq
+                                + instanceEntry.getPossibleAttributeValues()
+                                .get(instanceEntry.getAttributeLabels()[featureIndex])
+                                .size()
+                        )
+        );
+
+        // Smoothing using Laplace estimates (pseudocounts of 1)
+        probabilityClass1ProportionalTo = probabilityClass1ProportionalTo
+                * (
+                (featureAndClass1Freq + 1) /
+                        (totalClass1Freq
+                                + instanceEntry.getPossibleAttributeValues()
+                                .get(instanceEntry.getAttributeLabels()[featureIndex])
+                                .size()
+                        )
+        );
+
+        return new double[]{probabilityClass0ProportionalTo, probabilityClass1ProportionalTo};
+    }
 }
 

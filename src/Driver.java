@@ -38,16 +38,23 @@ public class Driver {
                     naiveBayesClassifier.classify(testEntry);
                 }
 
-                printer.printResults(modelType, trainingData);
+                printer.printResults(modelType, testData);
 
                 break;
             case "t":
 
                 tanBayesClassifier.trainModel(trainingData);
 
+                for (InstanceEntry testEntry : testData) {
+                    tanBayesClassifier.classify(testEntry);
+                }
+
+                printer.printResults(modelType, testData);
+
                 break;
             default:
                 System.err.println("Model type can be n or t");
+                System.exit(-1);
                 break;
         }
 
