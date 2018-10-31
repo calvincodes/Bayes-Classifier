@@ -4,6 +4,7 @@ public class Driver {
 
     private static ArffFileReader arffFileReader  = new ArffFileReader();
     private static NaiveBayesClassifier naiveBayesClassifier = new NaiveBayesClassifier();
+    private static TanBayesClassifier tanBayesClassifier = new TanBayesClassifier();
     private static Printer printer = new Printer();
 
     public static void main(String[] args) {
@@ -41,6 +42,8 @@ public class Driver {
 
                 break;
             case "t":
+
+                tanBayesClassifier.trainModel(trainingData);
 
                 break;
             default:
