@@ -13,7 +13,7 @@ public class TanBayesClassifier {
     private Integer freqY0 = 0, freqY1 = 0;
     private static boolean IS_TRAINED = false;
 
-    public void trainModel(List<InstanceEntry> trainingData) {
+    public void trainModel(List<InstanceEntry> trainingData, boolean print) {
 
         naiveBayesClassifier.trainModel(trainingData);
 
@@ -31,14 +31,16 @@ public class TanBayesClassifier {
 
         calculateTanProbabilities(trainingData);
 
-        for (int i = 0; i < featureCount; i++) {
-            System.out.print(attributeLabels[i] + " " + child2ParentStringMap.get(attributeLabels[i]));
-            if (!"class".equals(child2ParentStringMap.get(attributeLabels[i]))) {
-                System.out.print(" class");
+        if (print) {
+            for (int i = 0; i < featureCount; i++) {
+                System.out.print(attributeLabels[i] + " " + child2ParentStringMap.get(attributeLabels[i]));
+                if (!"class".equals(child2ParentStringMap.get(attributeLabels[i]))) {
+                    System.out.print(" class");
+                }
+                System.out.print("\n");
             }
             System.out.print("\n");
         }
-        System.out.print("\n");
 
         IS_TRAINED = true;
     }
