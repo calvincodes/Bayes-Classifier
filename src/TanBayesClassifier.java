@@ -215,8 +215,6 @@ public class TanBayesClassifier {
 
         }
 
-//        int freqY0 = 0;
-//        int freqY1 = 0;
         for (InstanceEntry trainingEntry : trainingData) {
             if (trainingEntry.getClassLabel() == 0) {
                 freqY0++;
