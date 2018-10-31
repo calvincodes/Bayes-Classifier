@@ -9,6 +9,11 @@ public class Printer {
 
         if (algorithmType.equals("n")) {
             printNaiveBayes(classifiedTestData);
+        } else if (algorithmType.equals("t")) {
+            printClassificationResult(classifiedTestData);
+        } else {
+            System.err.println("Model type can be n or t");
+            System.exit(-1);
         }
     }
 
@@ -20,6 +25,10 @@ public class Printer {
         }
         System.out.println();
 
+        printClassificationResult(testData);
+    }
+
+    private void printClassificationResult(List<InstanceEntry> testData) {
         int correctClassification = 0;
         for (InstanceEntry testEntry : testData) {
             System.out.println(
