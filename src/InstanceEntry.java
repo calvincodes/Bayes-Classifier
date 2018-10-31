@@ -1,6 +1,5 @@
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 
 public class InstanceEntry {
@@ -9,10 +8,8 @@ public class InstanceEntry {
     private HashMap<String, List<String>> possibleAttributeValues;
     private String[] featureValues;
     private int classLabel;
-    private String classLabelStr;
     private String[] allClassLabels;
     private int predictedClassLabel;
-    private String predictedClassLabelStr;
     private double predictionConfidence;
 
     public String[] getAttributeLabels() {
