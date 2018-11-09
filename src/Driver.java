@@ -9,7 +9,6 @@ public class Driver {
 
     public static void main(String[] args) {
 
-        long startTime = System.nanoTime();
         if (args.length != 3) {
             System.err.println("Usage bayes <train-set-file> <test-set-file> <n|t>");
             System.exit(-1);
@@ -57,9 +56,5 @@ public class Driver {
                 System.exit(-1);
                 break;
         }
-
-
-        long endTime = System.nanoTime();
-        System.out.println("Took "+ (double)(endTime - startTime) / 1000000000.0 + " s");
     }
 }
